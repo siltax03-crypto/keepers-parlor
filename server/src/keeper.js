@@ -345,7 +345,7 @@ async function runTurn({ compiled, session, playerInput, settings, emit, extras 
       memo: (session.memo && session.memo.text) || '',
       adapt: session.adapt || '',
       paceHint: extras.pace !== 'flow'
-        ? 'INTERACTIVE TEMPO IS BINDING: respond ONLY with the immediate in-character reaction to the player\'s last input — mostly the NPC/companion talking. Hard limit 3 segments (+1 panel). NO location change, NO time skip, NO next scripted event in this response unless the player asked to move on or yielded. Never narrate the player investigator\'s own actions or thoughts beyond what they typed. End by giving the floor back.'
+        ? 'INTERACTIVE TEMPO IS BINDING: respond ONLY with the immediate in-character reaction to the player\'s last input — mostly the NPC/companion talking; a single NPC line answering the player is a complete response. Hard limit 3 segments (+1 panel), at most ONE new fact or development. NO location change, NO time skip, NO next scripted event in this response — EXCEPTIONS: on [CONTINUE] the player yielded, advance to the next beat; if the player asked to move, depart in one beat and play the way there, never arriving and settling in the same response. Never narrate the player investigator\'s own actions or thoughts beyond what they typed. End by giving the floor back.'
         : '',
     }),
   }];
