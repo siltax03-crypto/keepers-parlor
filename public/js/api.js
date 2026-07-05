@@ -119,17 +119,8 @@ const FontPrefs = {
     if (family === 'serif') root.style.setProperty('--font-narr', this.SERIF);
     else if (family === 'sans') root.style.setProperty('--font-narr', this.SANS);
     else root.style.removeProperty('--font-narr');
-    // 전체 배율: zoom으로 줄어든 만큼 너비/높이를 역보정해 빈 공간이 안 생기게
-    const z = (ui && ui !== 100) ? ui / 100 : 1;
-    if (z !== 1) {
-      document.body.style.zoom = String(z);
-      document.body.style.width = (100 / z).toFixed(2) + '%';
-      document.body.style.height = (100 / z).toFixed(2) + '%';
-    } else {
-      document.body.style.zoom = '';
-      document.body.style.width = '';
-      document.body.style.height = '';
-    }
+    // 전체 배율: rem 스케일 — 요소가 작아진 만큼 레이아웃이 재배치돼 화면을 100% 채운다
+    root.style.fontSize = (ui && ui !== 100) ? (16 * ui / 100).toFixed(2) + 'px' : '';
   },
 };
 FontPrefs.apply();
