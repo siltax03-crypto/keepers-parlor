@@ -66,7 +66,11 @@ function attach(router) {
   }
 
   router.use(express.json({ limit: '40mb' })); // PDF(base64) 업로드 여유
-  router.use(express.static(path.join(__dirname, '..', 'public')));
+  // no-cache: 매번 서버에 재검증(304) — iOS Safari가 옛 CSS/JS를 붙들고 있는 것 방지
+  router.use(express.static(path.join(__dirname, '..', 'public'), {
+    etag: true,
+    setHeaders(res) { res.setHeader('Cache-Control', 'no-cache'); },
+  }));
 
   function stReady() {
     stReader.setPath((store.getSettings().st || {}).path);

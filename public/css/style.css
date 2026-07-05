@@ -527,7 +527,8 @@ html[data-theme="retro"] .send-btn { border-color: var(--ink); }
   .dice-pop { right: 0.5rem; bottom: 8.125rem; }
 }
 @media (max-width: 480px) {
-  .card-grid { grid-template-columns: 1fr; }
+  /* 컴퓨터처럼 네모 카드 격자 — 폰에서도 2열 */
+  .card-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.625rem; }
   .narrator-inner { padding: 0.75rem 0.875rem; font-size: var(--kp-narr-size, 0.9375rem); }
 }
 
