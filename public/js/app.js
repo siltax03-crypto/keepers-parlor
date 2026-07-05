@@ -857,24 +857,33 @@ document.querySelectorAll('#narration-seg .seg-btn').forEach(b => {
   });
 });
 
-// ── 글자 설정 (기기 저장 — 즉시 적용, 저장 버튼 불필요) ─────────
+// ── 화면 설정 (기기 저장 — 즉시 적용, 저장 버튼 불필요) ─────────
 function renderFontControls() {
-  const { size, family } = FontPrefs.get();
+  const { size, family, ui, enterSend } = FontPrefs.get();
   document.querySelectorAll('#font-seg .seg-btn').forEach(b =>
     b.classList.toggle('active', b.dataset.font === family));
-  const slider = document.getElementById('font-size');
-  slider.value = size || 14.5;
+  document.getElementById('font-size').value = size || 14.5;
   document.getElementById('font-size-label').textContent = size ? size + 'px' : '기본';
+  document.getElementById('ui-scale').value = ui;
+  document.getElementById('ui-scale-label').textContent = ui === 100 ? '기본' : ui + '%';
+  document.getElementById('enter-send').checked = enterSend;
 }
 document.querySelectorAll('#font-seg .seg-btn').forEach(b => {
   b.addEventListener('click', () => {
-    FontPrefs.set(FontPrefs.get().size, b.dataset.font);
+    FontPrefs.update({ family: b.dataset.font });
     renderFontControls();
   });
 });
 document.getElementById('font-size').addEventListener('input', e => {
-  FontPrefs.set(parseFloat(e.target.value), FontPrefs.get().family);
+  FontPrefs.update({ size: parseFloat(e.target.value) });
   renderFontControls();
+});
+document.getElementById('ui-scale').addEventListener('input', e => {
+  FontPrefs.update({ ui: parseFloat(e.target.value) });
+  renderFontControls();
+});
+document.getElementById('enter-send').addEventListener('change', e => {
+  FontPrefs.update({ enterSend: e.target.checked });
 });
 renderFontControls();
 

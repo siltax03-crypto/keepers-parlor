@@ -81,7 +81,7 @@ function invAvatarUrl(inv) {
   return null;
 }
 
-// ── 글자 설정 (기기 저장 — 나레이션/채팅 크기, 글꼴) ────────────
+// ── 화면 설정 (기기 저장 — 글자 크기/글꼴, 전체 배율, 엔터 전송) ──
 const FontPrefs = {
   SERIF: '"RIDIBatang", "Nanum Myeongjo", "Noto Serif KR", Batang, serif',
   SANS: '"Pretendard Variable", Pretendard, "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", sans-serif',
@@ -89,16 +89,25 @@ const FontPrefs = {
     return {
       size: parseFloat(localStorage.getItem('kp-font-size')) || 0, // 0 = 테마 기본
       family: localStorage.getItem('kp-font-family') || 'theme',
+      ui: parseFloat(localStorage.getItem('kp-ui-scale')) || 100,  // 전체 배율(%)
+      enterSend: localStorage.getItem('kp-enter-send') === 'on',   // 엔터로 전송
     };
   },
-  set(size, family) {
-    if (size) localStorage.setItem('kp-font-size', String(size));
+  update(partial) {
+    const cur = this.get();
+    const next = { ...cur, ...partial };
+    if (next.size) localStorage.setItem('kp-font-size', String(next.size));
     else localStorage.removeItem('kp-font-size');
-    localStorage.setItem('kp-font-family', family || 'theme');
+    localStorage.setItem('kp-font-family', next.family || 'theme');
+    if (next.ui && next.ui !== 100) localStorage.setItem('kp-ui-scale', String(next.ui));
+    else localStorage.removeItem('kp-ui-scale');
+    localStorage.setItem('kp-enter-send', next.enterSend ? 'on' : 'off');
     this.apply();
   },
+  // 하위 호환
+  set(size, family) { this.update({ size, family }); },
   apply() {
-    const { size, family } = this.get();
+    const { size, family, ui } = this.get();
     const root = document.documentElement;
     if (size) {
       root.style.setProperty('--kp-narr-size', (size + 1) + 'px');
@@ -110,6 +119,7 @@ const FontPrefs = {
     if (family === 'serif') root.style.setProperty('--font-narr', this.SERIF);
     else if (family === 'sans') root.style.setProperty('--font-narr', this.SANS);
     else root.style.removeProperty('--font-narr');
+    document.body.style.zoom = (ui && ui !== 100) ? String(ui / 100) : '';
   },
 };
 FontPrefs.apply();

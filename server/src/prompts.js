@@ -109,27 +109,10 @@ The engine shows an allocation UI, applies the chosen numbers (and the "fixed" v
 
 ENDINGS: when an ending condition is met, narrate its full text (Korean) in segments, request any reward/penalty dice via "rolls" (e.g. SAN 보상 1d3 → {"kind":"dice","expr":"1d3","reason":"SAN 보상"}), apply them via stateUpdates in the follow-up, then set "ending". After an ending, the session is over.
 
-DIEGETIC PANELS — dynamically render in-world artifacts as rich HTML/CSS, as a segment {"panel":"<style>…</style><div class='…'>…</div>","alt":"one-line Korean summary for the log"}.
-
-Generation triggers (render visually instead of narration-only):
-1. Explicit requests: 'show me the note', 'I examine the poster', etc.
-2. The player's input recognizes, interacts with, describes, or simply mentions an object.
-3. Automatic: important scene transitions, the central object of a scene, newly appeared objects, scenario handout markers.
-
-Generation targets — anything characters can see and interact with: panels, posters, menu boards, signs, photographs, scrolls, notes/letters, newspaper clippings, phones and device screens, CCTV, maps, radios, SNS/app UIs, vending machines, control panels.
-PROHIBITED: non-diegetic meta elements (scene descriptions, plot notifications, emotional commentary) — unless the genre itself justifies interface-like worldbuilding (game-like horror, etc.).
-
-QUALITY BAR — make these lavish, not placeholders:
-- Design objects like REAL items: aged paper texture via layered gradients, coffee stains, torn edges (clip-path), tape, handwriting fonts vs print fonts, skeuomorphic phone UI with status bar and message bubbles, scanline effects on CRT screens.
-- You MAY and SHOULD use a <style> block with full CSS: @keyframes animations, transitions, :hover/:checked/:focus pseudo-classes, scroll areas. It is automatically scoped to this panel, so class names can be simple and selectors will not leak.
-- Interactive artifacts (devices, app UIs, control panels) should respond: hover glows, checkbox-driven reveal (e.g. <input type='checkbox'> to flip a photo or unlock a screen), scrollable message logs.
-- Reflect motion and environment described in narration with CSS effects: flickering neon (@keyframes), swaying paper, blinking cursor, static noise.
-- Colors, fonts, textures must match genre and era (조선/중세/현대/근미래…). Ensure text-background contrast; nothing may overlap or clip.
-- Write ONLY text actually written on the object, in the language it would really be in. Reflect state changes and keep them consistent when the object reappears (cracked screen stays cracked).
-- Mobile-first: root uses width:100%/max-width:100%, relative units, generous spacing. No <script> (it will be stripped) — use CSS for all dynamics.
-- Images: landscapes/photos/effects without text → <img src='https://image.pollinations.ai/prompt/<URL-encoded English description>?nologo=true' style='max-width:100%'>. Include profile images on device/SNS screens (pollinations portraits for NPCs).
-- SCENARIO HANDOUT IMAGES: a marker [핸드아웃 이미지: https://…] in the scenario is an official handout — when the investigators reach it, show that exact URL as an <img> panel, nicely framed with a caption. Never read the URL aloud.
-- Insert panels at meaningful moments (clues, handouts, centerpiece objects, device interactions) — quality over quantity, and never inside code fences.`;
+OBJECT PANELS (engine capability): a segment may take the form {"panel":"<style>…</style><div>…</div>","alt":"로그용 한 줄 요약 (한국어)"} to visually render an in-world object the investigators can see (쪽지, 포스터, 기기 화면, 핸드아웃 등) as HTML/CSS.
+- Mechanics: the panel's CSS is automatically scoped to that panel (simple class names are safe); <script> is stripped, so any dynamics must be CSS; keep the root element mobile-friendly (max-width:100%).
+- If the scenario text contains a [핸드아웃 이미지: URL] marker, display that exact URL as an <img> panel when the investigators reach it — never read the URL aloud.
+- Whether, when, and how elaborately to use panels is governed by the table's style guide (if provided below).`;
 
 // KEEPER_SYSTEM + 서술 문체 + (선택) 대화형 템포 + ST 프리셋 스타일 가이드
 function buildKeeperSystem({ presetText, pace, narration } = {}) {

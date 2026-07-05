@@ -526,9 +526,11 @@ async function send() {
 }
 
 document.getElementById('btn-send').addEventListener('click', send);
-// 엔터는 줄바꿈 — 전송은 ➤ 버튼 또는 Ctrl+Enter
+// 전송: 기본은 ➤ 버튼/Ctrl+Enter. 설정에서 "엔터로 바로 전송"을 켜면 엔터도 전송
 chatIn.addEventListener('keydown', e => {
-  if (e.key === 'Enter' && (e.ctrlKey || e.metaKey) && !e.isComposing) { e.preventDefault(); send(); }
+  if (e.key !== 'Enter' || e.isComposing) return;
+  if (e.ctrlKey || e.metaKey) { e.preventDefault(); send(); return; }
+  if (!e.shiftKey && FontPrefs.get().enterSend) { e.preventDefault(); send(); }
 });
 chatIn.addEventListener('input', () => {
   chatIn.style.height = 'auto';
