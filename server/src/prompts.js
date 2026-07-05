@@ -197,6 +197,11 @@ function keeperTurnUser({ compiled, state, transcript, playerInput, companions, 
   if (paceHint) {
     blocks.push('===== PACING (final reminder — binding) =====', paceHint, '');
   }
+  blocks.push(
+    '===== VOICE (final reminder — binding) =====',
+    'Exclamation marks, stammering (어, 어…/마, 말이…), and filler laughs (하하/헤헤) are FORBIDDEN BY DEFAULT in every dialogue line. A character may use one ONLY if that character\'s own voice/persona notes explicitly show that manner — the scenario template using them is NOT permission; re-render the line in the speaker\'s idiom. Under stress, calm/blunt/reserved characters get quieter and shorter, never louder. Before emitting each dialogue segment, check it against this rule.',
+    '',
+  );
   blocks.push('Respond with the JSON object only.');
   return blocks.join('\n');
 }
@@ -206,7 +211,7 @@ function rollResultsUser(results) {
     '===== ROLL RESULTS (real dice, resolved by engine) =====',
     JSON.stringify(results),
     '',
-    'Continue from exactly where you stopped, narrating these outcomes per the scenario. Respond with the JSON object only.',
+    'Continue from exactly where you stopped, narrating these outcomes per the scenario. The VOICE rule remains binding: no exclamation marks/stammering/filler laughs in dialogue unless the speaker\'s own voice notes show that manner. Respond with the JSON object only.',
   ].join('\n');
 }
 

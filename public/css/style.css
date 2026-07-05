@@ -720,9 +720,12 @@ html[data-theme="novel"] .card, html[data-theme="novel"] .settings-box { box-sha
 
 /* 세션 슬림 카드 */
 .card-slim { padding: 0.75rem 0.875rem; gap: 0.1875rem; }
+.slim-row .chip { flex-shrink: 0; }
+.card-slim .card-sub { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .slim-row { display: flex; align-items: center; gap: 0.5rem; }
 .slim-title {
   flex: 1;
+  min-width: 0; /* flex 아이템이 내용보다 작아질 수 있어야 ellipsis가 발동 */
   font-size: 0.9375rem;
   overflow: hidden;
   text-overflow: ellipsis;
