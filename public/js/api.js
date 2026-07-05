@@ -119,10 +119,26 @@ const FontPrefs = {
     if (family === 'serif') root.style.setProperty('--font-narr', this.SERIF);
     else if (family === 'sans') root.style.setProperty('--font-narr', this.SANS);
     else root.style.removeProperty('--font-narr');
-    document.body.style.zoom = (ui && ui !== 100) ? String(ui / 100) : '';
+    // 전체 배율: zoom으로 줄어든 만큼 너비/높이를 역보정해 빈 공간이 안 생기게
+    const z = (ui && ui !== 100) ? ui / 100 : 1;
+    if (z !== 1) {
+      document.body.style.zoom = String(z);
+      document.body.style.width = (100 / z).toFixed(2) + '%';
+      document.body.style.height = (100 / z).toFixed(2) + '%';
+    } else {
+      document.body.style.zoom = '';
+      document.body.style.width = '';
+      document.body.style.height = '';
+    }
   },
 };
 FontPrefs.apply();
+// 홈화면 앱의 뒤로가기 캐시 복원/다른 화면에서 바꾼 설정도 즉시 반영
+window.addEventListener('pageshow', () => FontPrefs.apply());
+window.addEventListener('storage', () => FontPrefs.apply());
+document.addEventListener('visibilitychange', () => {
+  if (!document.hidden) FontPrefs.apply();
+});
 
 // ── 테마 ───────────────────────────────────────────────────────
 const Themes = {
