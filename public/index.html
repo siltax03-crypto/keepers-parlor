@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="classic">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>키퍼의 방 — Keeper's Parlor</title>
+<link rel="stylesheet" href="css/style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎲</text></svg>">
+<!-- 홈화면 앱 모드: play.html로 넘어가도 브라우저 UI가 안 뜨게 (scope) -->
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="키퍼의 방">
+</head>
+<body>
+<header class="topbar">
+  <div class="logo">
+    <span class="logo-mark">⚿</span>
+    <span class="logo-text">키퍼의 방</span>
+    <span class="logo-sub">Keeper's Parlor</span>
+  </div>
+  <div class="theme-picker" id="theme-picker"></div>
+</header>
+
+<nav class="main-tabs" id="main-tabs">
+  <button data-tab="sessions" class="tab-btn active">🕯 세션</button>
+  <button data-tab="scenarios" class="tab-btn">📜 시나리오</button>
+  <button data-tab="investigators" class="tab-btn">🔍 탐사자</button>
+  <button data-tab="settings" class="tab-btn">⚙ 설정</button>
+</nav>
+
+<main class="lobby">
+  <section class="lobby-sec" id="sec-sessions">
+    <div class="sec-head">
+      <h2>🕯 세션</h2>
+      <button class="btn btn-primary" id="btn-new-session">＋ 새 세션</button>
+    </div>
+    <div class="card-grid" id="session-list"></div>
+  </section>
+
+  <section class="lobby-sec" id="sec-scenarios">
+    <div class="sec-head">
+      <h2>📜 시나리오</h2>
+      <div class="sec-btns">
+        <button class="btn btn-ghost" id="btn-ai-scenario">✨ AI로 만들기</button>
+        <button class="btn btn-primary" id="btn-new-scenario">＋ 시나리오 추가</button>
+      </div>
+    </div>
+    <div class="card-grid" id="scenario-list"></div>
+  </section>
+
+  <section class="lobby-sec" id="sec-investigators">
+    <div class="sec-head">
+      <h2>🔍 탐사자</h2>
+      <div class="sec-btns">
+        <button class="btn btn-ghost" id="btn-st-import">🎭 ST에서 가져오기</button>
+        <button class="btn btn-primary" id="btn-new-investigator">＋ 새 탐사자</button>
+      </div>
+    </div>
+    <div class="card-grid" id="investigator-list"></div>
+  </section>
+
+  <section class="lobby-sec" id="sec-settings">
+    <div class="sec-head"><h2>⚙ 설정</h2></div>
+    <div class="settings-box">
+      <div class="field-row">
+        <span class="field-label">AI 제공자</span>
+        <div class="seg" id="provider-seg">
+          <button data-p="gemini" class="seg-btn">Gemini</button>
+          <button data-p="claude" class="seg-btn">Claude</button>
+          <button data-p="st" class="seg-btn">ST 프로필</button>
+        </div>
+      </div>
+      <div class="provider-box" id="box-gemini">
+        <label class="field"><span class="field-label">Gemini API 키</span>
+          <input class="in" id="gemini-key" type="password" placeholder="AIza…" autocomplete="off"></label>
+        <label class="field"><span class="field-label">모델</span>
+          <input class="in" id="gemini-model" placeholder="gemini-3.1-pro"></label>
+      </div>
+      <div class="provider-box" id="box-claude">
+        <label class="field"><span class="field-label">Claude API 키</span>
+          <input class="in" id="claude-key" type="password" placeholder="sk-ant-…" autocomplete="off"></label>
+        <label class="field"><span class="field-label">모델</span>
+          <input class="in" id="claude-model" placeholder="claude-sonnet-5"></label>
+      </div>
+      <div class="provider-box" id="box-st">
+        <label class="field" id="st-path-field"><span class="field-label">SillyTavern 설치 경로 (이 서버와 같은 머신)</span>
+          <input class="in" id="st-path" placeholder="/home/ubuntu/SillyTavern 또는 C:\SillyTavern"></label>
+        <label class="field"><span class="field-label">커넥션 프로필</span>
+          <div class="st-profile-row">
+            <select class="in" id="st-profile"><option value="">(ST에서 선택된 프로필)</option></select>
+            <button class="btn btn-ghost btn-sm" id="btn-st-refresh">새로고침</button>
+          </div></label>
+        <label class="check-row"><input type="checkbox" id="st-use-preset">
+          <span>프로필의 프리셋을 스타일 가이드로 주입 (긴 프리셋은 토큰을 많이 씁니다)</span></label>
+        <div class="preset-edit-row">
+          <button class="btn btn-ghost btn-sm" id="btn-preset-edit">📋 프리셋 항목 보기/편집</button>
+          <span class="muted small">여기(키퍼)에서만 항목을 빼거나 추가 — ST 원본은 그대로</span>
+        </div>
+        <div class="st-status muted small" id="st-status"></div>
+      </div>
+      <div class="field-row">
+        <span class="field-label">나레이션 글꼴</span>
+        <div class="seg" id="font-seg">
+          <button data-font="theme" class="seg-btn">테마 기본</button>
+          <button data-font="serif" class="seg-btn">명조</button>
+          <button data-font="sans" class="seg-btn">고딕</button>
+        </div>
+      </div>
+      <div class="field-row">
+        <span class="field-label">글자 크기</span>
+        <input type="range" id="font-size" min="12" max="19" step="0.5" style="flex:1">
+        <span class="muted small" id="font-size-label" style="min-width:44px"></span>
+      </div>
+      <div class="field-row">
+        <span class="field-label">진행 템포</span>
+        <div class="seg" id="pace-seg">
+          <button data-pace="beat" class="seg-btn">대화형 (자주 멈춤)</button>
+          <button data-pace="flow" class="seg-btn">시원시원 (쭉 진행)</button>
+        </div>
+      </div>
+      <div class="field-row">
+        <span class="field-label">서술 문체</span>
+        <div class="seg" id="narration-seg">
+          <button data-narr="novel" class="seg-btn">소설체 (-했다)</button>
+          <button data-narr="polite" class="seg-btn">경어체 (-합니다)</button>
+        </div>
+      </div>
+      <label class="check-row"><input type="checkbox" id="player-dice">
+        <span>🎲 내 탐사자의 판정은 내가 굴린다 (키퍼가 판정을 요청하면 멈추고 버튼이 뜸)</span></label>
+      <div class="settings-actions">
+        <button class="btn btn-primary" id="btn-save-settings">저장</button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">AI Keeper Virtual Tabletop — 시나리오 RPG · 시뮬 · CoC 7e</footer>
+
+<script src="js/api.js"></script>
+<script src="js/sheet.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+{
+  "name": "키퍼의 방 (Keeper's Parlor)",
+  "short_name": "키퍼의 방",
+  "display": "standalone",
+  "start_url": "./index.html",
+  "scope": "./",
+  "background_color": "#efe6d5",
+  "theme_color": "#efe6d5",
+  "icons": [
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml" }
+  ]
+}

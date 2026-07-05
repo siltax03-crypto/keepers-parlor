@@ -1,0 +1,11 @@
+{
+  "display_name": "키퍼의 방 (Keeper's Parlor)",
+  "loading_order": 100,
+  "requires": [],
+  "optional": [],
+  "js": "index.js",
+  "css": "style.css",
+  "author": "jinny1010",
+  "version": "0.7.0",
+  "homePage": "https://github.com/jinny1010/keepers-parlor"
+}

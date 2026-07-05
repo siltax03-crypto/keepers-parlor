@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="classic">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>세션 — 키퍼의 방</title>
+<link rel="stylesheet" href="css/style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🕯</text></svg>">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="키퍼의 방">
+</head>
+<body class="play-body">
+<header class="topbar play-top">
+  <a href="index.html" class="back-btn" title="로비로">←</a>
+  <div class="session-head">
+    <div class="session-title" id="session-title">…</div>
+    <div class="scene-chip" id="scene-chip"></div>
+  </div>
+  <button class="icon-btn mobile-only" id="btn-party" title="탐사자 패널">🔍</button>
+  <div class="theme-picker desktop-only" id="theme-picker"></div>
+</header>
+
+<div class="play-layout">
+  <main class="chat-col">
+    <div class="log" id="log"></div>
+    <div class="typing hidden" id="typing">
+      <span class="typing-dots"><i></i><i></i><i></i></span>
+      <span id="typing-text">키퍼가 생각 중…</span>
+    </div>
+    <div class="start-holder hidden" id="start-holder">
+      <button class="btn btn-primary btn-big" id="btn-start">🕯 세션 시작</button>
+    </div>
+    <div class="input-bar" id="input-bar">
+      <div class="input-tools">
+        <select class="who-sel" id="who" title="발화 탐사자"></select>
+        <span class="input-tools-spacer"></span>
+        <button class="icon-btn" id="btn-reroll" title="마지막 키퍼 응답을 물리고 다시 (피드백 지시 가능)">↻ 다시</button>
+        <button class="icon-btn" id="btn-undo" title="마지막 턴(내 입력 포함)을 없던 일로">↩ 되돌리기</button>
+        <button class="icon-btn" id="btn-dice" title="주사위 굴리기">🎲 주사위</button>
+        <button class="icon-btn" id="btn-continue" title="키퍼에게 진행 맡기기">⏭ 진행 맡기기</button>
+      </div>
+      <div class="input-main">
+        <textarea class="chat-in" id="chat-in" rows="2" placeholder="행동이나 대사를 입력… (➤ 버튼으로 전송)"></textarea>
+        <button class="send-btn" id="btn-send" title="전송">➤</button>
+      </div>
+    </div>
+  </main>
+
+  <aside class="side-col" id="side-col">
+    <div class="side-head">
+      <h3>탐사자</h3>
+      <button class="icon-btn mobile-only" id="btn-close-side">✕</button>
+    </div>
+    <div id="party"></div>
+  </aside>
+  <div class="side-dim hidden" id="side-dim"></div>
+</div>
+
+<div class="dice-pop hidden" id="dice-pop">
+  <div class="dice-pop-head">주사위</div>
+  <div class="dice-quick" id="dice-quick"></div>
+  <div class="dice-custom">
+    <input class="in" id="dice-expr" placeholder="예: 2d6+1">
+    <button class="btn btn-sm btn-primary" id="btn-roll-custom">굴림</button>
+  </div>
+</div>
+
+<script src="js/api.js"></script>
+<script src="js/sheet.js"></script>
+<script src="js/play.js"></script>
+</body>
+</html>

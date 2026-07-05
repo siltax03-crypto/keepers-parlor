@@ -1,0 +1,48 @@
+/* 키퍼의 방 — ST 확장 설정 패널 */
+#kp-ext-settings .kp-status {
+  margin: 6px 0;
+  font-size: 0.95em;
+}
+
+#kp-ext-settings .kp-actions {
+  display: flex;
+  flex-wrap: wrap; /* 좁으면 버튼 단위로 줄바꿈 (글자가 세로로 깨지지 않게) */
+  gap: 6px;
+  margin: 8px 0;
+}
+
+#kp-ext-settings .kp-actions .menu_button {
+  white-space: nowrap;
+  flex: 0 0 auto;
+  width: auto;
+  margin: 0;
+}
+
+#kp-ext-settings .kp-update-info {
+  margin: 6px 0;
+  font-size: 0.9em;
+  opacity: 0.95;
+}
+
+#kp-ext-settings .kp-update-info pre {
+  margin: 4px 0 0;
+  padding: 6px 8px;
+  font-size: 0.85em;
+  white-space: pre-wrap;
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+#kp-ext-settings .kp-help {
+  margin-top: 8px;
+  padding: 8px 10px;
+  border: 1px dashed var(--SmartThemeBorderColor, #888);
+  border-radius: 6px;
+  font-size: 0.9em;
+  line-height: 1.7;
+  opacity: 0.9;
+}
+
+#kp-ext-settings .kp-help code {
+  font-size: 0.9em;
+}

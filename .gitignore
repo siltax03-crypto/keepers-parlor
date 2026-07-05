@@ -1,0 +1,10 @@
+# 의존성 (다른 컴에서 `npm install`로 재생성)
+node_modules/
+
+# 로컬 데이터 (API 키·세션 포함 — 커밋 금지. 예시는 server/samples/에서 시드됨)
+server/data/
+
+# OS / 에디터
+.DS_Store
+Thumbs.db
+*.log

@@ -1,0 +1,13 @@
+{
+  "name": "keepers-parlor",
+  "version": "1.0.0",
+  "description": "AI Keeper TRPG table - Call of Cthulhu 7e",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "pdfjs-dist": "^3.11.174"
+  }
+}
